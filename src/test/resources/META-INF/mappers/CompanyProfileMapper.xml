@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="vn.mangtuyendung.persistence.repositories.company.CompanyProfileRepository">
+
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+    
+    <select id="findAll" resultType="CompanyProfileDomain" flushCache="false" useCache="true">
+        SELECT 
+        ID,
+        COMPANY_NAME as companyName,
+        COMPANY_NAME_ENGLISH as companyNameEnglish,
+        COMPANY_ADDRESS as companyAddress,
+        COMPANY_PHONE as companyPhone,
+        COMPANY_TAX_CODE as companyTaxCode,
+        COMPANY_BUSINESS_SCOPE as companyBusinessScope,
+        COMPANY_OVERVIEW as companyOverview,
+        COMPANY_RANGE as companyRange,
+        COMPANY_WEBSITE as companyWebsite,
+        COMPANY_EMAIL as companyEmail,
+        VERIFY as verify,
+        CREATER as creater,
+        CREATED as created
+        FROM job_company
+        ORDER BY CREATED DESC
+    </select>
+    
+    <select id="findById" resultType="CompanyProfileDomain" flushCache="false" useCache="true">
+        SELECT 
+        ID,
+        COMPANY_NAME as companyName,
+        COMPANY_NAME_ENGLISH as companyNameEnglish,
+        COMPANY_ADDRESS as companyAddress,
+        COMPANY_PHONE as companyPhone,
+        COMPANY_TAX_CODE as companyTaxCode,
+        COMPANY_BUSINESS_SCOPE as companyBusinessScope,
+        COMPANY_OVERVIEW as companyOverview,
+        COMPANY_RANGE as companyRange,
+        COMPANY_WEBSITE as companyWebsite,
+        COMPANY_EMAIL as companyEmail,
+        VERIFY as verify,
+        CREATER as creater,
+        CREATED as created
+        FROM job_company
+        WHERE ID = #{id}
+    </select>
+    
+    <insert id="save" parameterType="CompanyProfileDomain" flushCache="true">
+        INSERT INTO job_company 
+        (ID, COMPANY_URL, COMPANY_NAME, COMPANY_NAME_ENGLISH, COMPANY_ADDRESS, COMPANY_PHONE, COMPANY_TAX_CODE, COMPANY_BUSINESS_SCOPE, COMPANY_OVERVIEW, COMPANY_RANGE, COMPANY_WEBSITE, COMPANY_EMAIL, VERIFY, CREATER)
+        VALUES
+        (#{id}, #{companyURL}, #{companyName}, #{companyNameEnglish}, #{companyAddress}, #{companyPhone}, #{companyTaxCode}, #{companyBusinessScope}, #{companyOverview}, #{companyRange}, #{companyWebsite}, #{companyEmail}, #{verify}, #{creater})
+    </insert>
+    
+    <update id="update" flushCache="true">
+        UPDATE job_company
+        SET
+        COMPANY_URL = #{companyURL},
+        COMPANY_NAME = #{companyName},
+        COMPANY_NAME_ENGLISH = #{companyNameEnglish},
+        COMPANY_ADDRESS = #{companyAddress},
+        COMPANY_PHONE = #{companyPhone},
+        COMPANY_TAX_CODE = #{companyTaxCode},
+        COMPANY_BUSINESS_SCOPE = #{companyBusinessScope},
+        COMPANY_OVERVIEW = #{companyOverview},
+        COMPANY_RANGE = #{companyRange},
+        COMPANY_WEBSITE = #{companyWebsite},
+        COMPANY_EMAIL = #{companyEmail},
+        VERIFY = #{verify},
+        CREATER = #{creater},
+        CREATED = #{created}
+        WHERE ID = #{id}
+    </update>
+</mapper>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="vn.mangtuyendung.persistence.repositories.company.CompanyMemberRepository">
+
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+    
+    <select id="findAll" resultType="CompanyMemberDomain" flushCache="false" useCache="true">
+        SELECT 
+        ID,
+        MEMBER_ID as memberId,
+        COMPANY_ID as companyId,
+        COMPANY_NAME as companyName,
+        COMPANY_NAME_ENGLISH as companyNameEnglish,
+        COMPANY_ADDRESS as companyAddress,
+        VERIFY as verify,
+        CREATER as creater,
+        CREATED as created,
+        UPDATER as updater,
+        UPDATED as updated
+        FROM company_member
+        ORDER BY CREATED DESC
+    </select>
+    
+    <select id="findById" resultType="CompanyMemberDomain" flushCache="false" useCache="true">
+        SELECT 
+        ID,
+        MEMBER_ID as memberId,
+        COMPANY_ID as companyId,
+        COMPANY_NAME as companyName,
+        COMPANY_NAME_ENGLISH as companyNameEnglish,
+        COMPANY_ADDRESS as companyAddress,
+        VERIFY as verify,
+        CREATER as creater,
+        CREATED as created,
+        UPDATER as updater,
+        UPDATED as updated
+        FROM company_member
+        WHERE ID = #{id}
+        ORDER BY CREATED DESC
+    </select>
+    
+    <select id="findByMemberId" resultType="CompanyMemberDomain" flushCache="false" useCache="true">
+        SELECT 
+        ID,
+        MEMBER_ID as memberId,
+        COMPANY_ID as companyId,
+        COMPANY_NAME as companyName,
+        COMPANY_NAME_ENGLISH as companyNameEnglish,
+        COMPANY_ADDRESS as companyAddress,
+        VERIFY as verify,
+        CREATER as creater,
+        CREATED as created,
+        UPDATER as updater,
+        UPDATED as updated
+        FROM company_member
+        WHERE MEMBER_ID = #{memberId}
+        ORDER BY CREATED DESC
+    </select>
+    
+    <insert id="save" parameterType="CompanyMemberDomain" flushCache="true">
+        INSERT INTO company_member
+        (ID, MEMBER_ID, COMPANY_ID, COMPANY_NAME, COMPANY_NAME_ENGLISH, COMPANY_ADDRESS, VERIFY, CREATER)
+        VALUES
+        (#{id}, #{memberId}, #{companyId}, #{companyName}, #{companyNameEnglish}, #{companyAddress}, #{verify}, #{creater})
+    </insert>
+    
+    <update id="update" flushCache="true">
+        UPDATE company_member
+        SET
+        VERIFY = #{verify},
+        UPDATER = #{updater},
+        UPDATED = #{updated}
+        WHERE ID = #{id}
+    </update>
+</mapper>
