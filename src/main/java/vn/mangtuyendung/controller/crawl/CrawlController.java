@@ -112,20 +112,20 @@ public class CrawlController {
         String[] tmp = _cat.split(",");
         for (String v : tmp) {
             String map = v.trim();
-            System.out.println("Map:" + map + "-Domain:" + domain);
+            logger.debug("Map:" + map + "-Domain:" + domain);
             CategoryMapDomain _map = this.mapService.findByCategoryAndDomain(map, domain);
             if (_map != null) {
                 map = _map.getMap();
                 String[] c = map.split("/");
                 for (String cat : c) {
                     cat = cat.trim();
-                    System.out.println("Category map:" + cat);
+                    logger.debug("Category map:" + cat);
                     if (!values.contains(cat)) {
                         values.add(cat);
                     }
                 }
             } else {
-                System.out.println("Cannot find map:" + map);
+                logger.debug("Cannot find map:" + map);
             }
         }
         return values;
@@ -154,7 +154,7 @@ public class CrawlController {
 
         String tmp = clone.getJobLocation();
         if (tmp != null) {
-            System.out.println("JobLocation:" + tmp);
+            logger.debug("JobLocation:" + tmp);
             tmp = tmp.trim();
             tmp = tmp.replaceAll("TP\\. HCM", "Hồ Chí Minh");
             tmp = tmp.replaceAll("Lắc", "Lắk");
@@ -174,7 +174,7 @@ public class CrawlController {
 
         tmp = clone.getJobEducationLevel();
         if (tmp != null) {
-            System.out.println("JobEducation:" + tmp);
+            logger.debug("JobEducation:" + tmp);
             tmp = tmp.replaceAll("Không khai báo", "Không yêu cầu");
             tmp = tmp.replaceAll("Khác", "Không yêu cầu");
             tmp = tmp.replaceAll("PTCS", "Trung học");
@@ -190,7 +190,7 @@ public class CrawlController {
         tmp = clone.getJobExperienceLevel();
         if (tmp != null) {
             tmp = tmp.trim();
-            System.out.println("JobExperienceLevel:" + tmp);
+            logger.debug("JobExperienceLevel:" + tmp);
             if ("1 năm".equals(tmp) || "Chưa có kinh nghiệm".equals(tmp) || "Dưới 1 năm".equals(tmp)) {
                 tmp = "0-1 năm kinh nghiệm";
             } else if ("2 năm".equals(tmp)) {
@@ -210,7 +210,7 @@ public class CrawlController {
 
         tmp = clone.getJobCategory();
         if (clone.getJobCategory() != null) {
-            System.out.println("JobCategory:" + tmp);
+            logger.debug("JobCategory:" + tmp);
             tmp = tmp.replaceAll("/ ", "/");
             tmp = tmp.replaceAll(" /", "/");
             tmp = tmp.replaceAll("- ", "-");

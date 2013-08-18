@@ -361,7 +361,7 @@ public class HomeController extends SiteAbstractController {
             if ((list != null) && (!list.isEmpty())) {
                 JobDomain job = solrService.convertDocument((SolrDocument) list.get(0));
                 if (job != null) {
-                    if (job.getExpired().after(new Date())) { //If job not expired
+                    if (job.getExpired() != null && job.getExpired().after(new Date())) { //If job not expired
                         model.addAttribute("job", job);
                         model.addAttribute("title", "Cần tuyển " + job.getTitle() + " tại " + (String) job.getJobLocation().get(0));
                         model.addAttribute("description", job.getContent());

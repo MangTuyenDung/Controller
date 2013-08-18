@@ -178,7 +178,7 @@ public class CrawlMemberController {
 
         String tmp = clone.getJobLocation();
         if (tmp != null) {
-            System.out.println(new StringBuilder().append("JobLocation:").append(tmp).toString());
+            logger.debug(new StringBuilder().append("JobLocation:").append(tmp).toString());
             tmp = filter(tmp);
             tmp = tmp.replaceAll("TP\\. HCM", "Hồ Chí Minh");
             tmp = tmp.replaceAll("Lắc", "Lắk");
@@ -197,7 +197,7 @@ public class CrawlMemberController {
 
         tmp = clone.getJobCategory();
         if (clone.getJobCategory() != null) {
-            System.out.println(new StringBuilder().append("JobCategory:").append(tmp).toString());
+            logger.debug(new StringBuilder().append("JobCategory:").append(tmp).toString());
             tmp = tmp.replaceAll("/ ", "/");
             tmp = tmp.replaceAll(" /", "/");
             tmp = tmp.replaceAll("- ", "-");
@@ -232,20 +232,20 @@ public class CrawlMemberController {
         String[] tmp = _cat.split(",");
         for (String v : tmp) {
             String map = v.trim();
-            System.out.println(new StringBuilder().append("Map:").append(map).append("-Domain:").append(domain).toString());
+            logger.debug(new StringBuilder().append("Map:").append(map).append("-Domain:").append(domain).toString());
             CategoryMapDomain _map = this.mapService.findByCategoryAndDomain(map, domain);
             if (_map != null) {
                 map = _map.getMap();
                 String[] c = map.split("/");
                 for (String cat : c) {
                     cat = cat.trim();
-                    System.out.println(new StringBuilder().append("Category map:").append(cat).toString());
+                    logger.debug(new StringBuilder().append("Category map:").append(cat).toString());
                     if (!values.contains(cat)) {
                         values.add(cat);
                     }
                 }
             } else {
-                System.out.println(new StringBuilder().append("Cannot find map:").append(map).toString());
+                logger.debug(new StringBuilder().append("Cannot find map:").append(map).toString());
             }
         }
         return values;
