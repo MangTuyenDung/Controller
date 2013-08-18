@@ -113,7 +113,7 @@ public class HomeController extends SiteAbstractController {
                 QueryResponse response = solrService.search(query, 0, sizeNo);
                 long total = response.getResults().getNumFound();
                 float nrOfPages = (float) total / sizeNo;
-                model.addAttribute("maxPages", Integer.valueOf((int) ((nrOfPages > (int) nrOfPages) || (nrOfPages == 0.0D) ? nrOfPages + 1.0F : nrOfPages)));
+                model.addAttribute("maxPages", (int) Math.ceil(nrOfPages == 0 ? nrOfPages + 1 : nrOfPages));
 
                 model.addAttribute("ratingValue", Float.valueOf(JobUtils.ratingValue()));
                 model.addAttribute("ratingCount", Long.valueOf(total));
@@ -155,7 +155,7 @@ public class HomeController extends SiteAbstractController {
                 }
                 long total = response.getResults().getNumFound();
                 float nrOfPages = (float) total / sizeNo;
-                model.addAttribute("maxPages", Integer.valueOf((int) ((nrOfPages > (int) nrOfPages) || (nrOfPages == 0.0D) ? nrOfPages + 1.0F : nrOfPages)));
+                model.addAttribute("maxPages", (int) Math.ceil(nrOfPages == 0 ? nrOfPages + 1 : nrOfPages));
 
                 model.addAttribute("ratingValue", Float.valueOf(JobUtils.ratingValue()));
                 model.addAttribute("ratingCount", Long.valueOf(total));
@@ -195,7 +195,7 @@ public class HomeController extends SiteAbstractController {
                 QueryResponse response = solrService.search(query, 0, sizeNo);
                 long total = response.getResults().getNumFound();
                 float nrOfPages = (float) total / sizeNo;
-                model.addAttribute("maxPages", Integer.valueOf((int) ((nrOfPages > (int) nrOfPages) || (nrOfPages == 0.0D) ? nrOfPages + 1.0F : nrOfPages)));
+                model.addAttribute("maxPages", (int) Math.ceil(nrOfPages == 0 ? nrOfPages + 1 : nrOfPages));
 
                 model.addAttribute("ratingValue", Float.valueOf(JobUtils.ratingValue()));
                 model.addAttribute("ratingCount", Long.valueOf(total));
@@ -237,7 +237,7 @@ public class HomeController extends SiteAbstractController {
                 }
                 long total = response.getResults().getNumFound();
                 float nrOfPages = (float) total / sizeNo;
-                model.addAttribute("maxPages", Integer.valueOf((int) ((nrOfPages > (int) nrOfPages) || (nrOfPages == 0.0D) ? nrOfPages + 1.0F : nrOfPages)));
+                model.addAttribute("maxPages", (int) Math.ceil(nrOfPages == 0 ? nrOfPages + 1 : nrOfPages));
 
                 model.addAttribute("ratingValue", Float.valueOf(JobUtils.ratingValue()));
                 model.addAttribute("ratingCount", Long.valueOf(total));
@@ -277,7 +277,7 @@ public class HomeController extends SiteAbstractController {
                 QueryResponse response = solrService.search(query, 0, sizeNo);
                 long total = response.getResults().getNumFound();
                 float nrOfPages = (float) total / sizeNo;
-                model.addAttribute("maxPages", Integer.valueOf((int) ((nrOfPages > (int) nrOfPages) || (nrOfPages == 0.0D) ? nrOfPages + 1.0F : nrOfPages)));
+                model.addAttribute("maxPages", (int) Math.ceil(nrOfPages == 0 ? nrOfPages + 1 : nrOfPages));
 
                 model.addAttribute("ratingValue", Float.valueOf(JobUtils.ratingValue()));
                 model.addAttribute("ratingCount", Long.valueOf(total));
@@ -321,7 +321,7 @@ public class HomeController extends SiteAbstractController {
                 }
                 long total = response.getResults().getNumFound();
                 float nrOfPages = (float) total / sizeNo;
-                model.addAttribute("maxPages", Integer.valueOf((int) ((nrOfPages > (int) nrOfPages) || (nrOfPages == 0.0D) ? nrOfPages + 1.0F : nrOfPages)));
+                model.addAttribute("maxPages", (int) Math.ceil(nrOfPages == 0 ? nrOfPages + 1 : nrOfPages));
 
                 model.addAttribute("ratingValue", Float.valueOf(JobUtils.ratingValue()));
                 model.addAttribute("ratingCount", Long.valueOf(total));
@@ -390,7 +390,7 @@ public class HomeController extends SiteAbstractController {
                     form.setSlocation("all");
                     form.setStext(job.getTitle());
 
-                    model.addAttribute("maxPages", Integer.valueOf((int) ((nrOfPages > (int) nrOfPages) || (nrOfPages == 0.0D) ? nrOfPages + 1.0F : nrOfPages)));
+                    model.addAttribute("maxPages", (int) Math.ceil(nrOfPages == 0 ? nrOfPages + 1 : nrOfPages));
                     model.addAttribute("pageNo", Integer.valueOf(1));
                     model.addAttribute("sizeNo", Integer.valueOf(sizeNo));
                     model.addAttribute("jobs", jobs);
@@ -458,7 +458,7 @@ public class HomeController extends SiteAbstractController {
             }
             long total = response.getResults().getNumFound();
             float nrOfPages = (float) total / sizeNo;
-            model.addAttribute("maxPages", Integer.valueOf((int) ((nrOfPages > (int) nrOfPages) || (nrOfPages == 0.0D) ? nrOfPages + 1.0F : nrOfPages)));
+            model.addAttribute("maxPages", (int) Math.ceil(nrOfPages == 0 ? nrOfPages + 1 : nrOfPages));
 
             model.addAttribute("pageNo", Integer.valueOf(1));
             model.addAttribute("sizeNo", Integer.valueOf(sizeNo));
@@ -519,7 +519,7 @@ public class HomeController extends SiteAbstractController {
             }
             long total = response.getResults().getNumFound();
             float nrOfPages = (float) total / sizeNo;
-            model.addAttribute("maxPages", Integer.valueOf((int) ((nrOfPages > (int) nrOfPages) || (nrOfPages == 0.0D) ? nrOfPages + 1.0F : nrOfPages)));
+            model.addAttribute("maxPages", (int) Math.ceil(nrOfPages == 0 ? nrOfPages + 1 : nrOfPages));
 
             model.addAttribute("pageNo", 1);
             model.addAttribute("sizeNo", Integer.valueOf(sizeNo));
@@ -572,7 +572,7 @@ public class HomeController extends SiteAbstractController {
             }
             long total = response.getResults().getNumFound();
             float nrOfPages = (float) total / sizeNo;
-            model.addAttribute("maxPages", Integer.valueOf((int) ((nrOfPages > (int) nrOfPages) || (nrOfPages == 0.0D) ? nrOfPages + 1.0F : nrOfPages)));
+            model.addAttribute("maxPages", (int) Math.ceil(nrOfPages == 0 ? nrOfPages + 1 : nrOfPages));
 
             model.addAttribute("pageNo", page);
             model.addAttribute("sizeNo", Integer.valueOf(sizeNo));

@@ -64,7 +64,8 @@ public class AdminJobController extends SiteAbstractController {
             model.addAttribute("jobs", myJobs);
             long total = service.count(DEFAULT_DOMAIN);
             float nrOfPages = (float) total / sizeNo;
-            model.addAttribute("maxPages", Integer.valueOf((int) ((nrOfPages > (int) nrOfPages) || (nrOfPages == 0.0D) ? nrOfPages + 1.0F : nrOfPages)));
+            model.addAttribute("maxPages", (int) Math.ceil(nrOfPages == 0 ? nrOfPages + 1 : nrOfPages));
+
             return "admin/jobs";
         } catch (Exception ex) {
             logger.error("Cannot get jobs: " + ex.toString(), ex);
@@ -95,7 +96,7 @@ public class AdminJobController extends SiteAbstractController {
             }
             long total = service.count(DEFAULT_DOMAIN);
             float nrOfPages = (float) total / sizeNo;
-            model.addAttribute("maxPages", Integer.valueOf((int) ((nrOfPages > (int) nrOfPages) || (nrOfPages == 0.0D) ? nrOfPages + 1.0F : nrOfPages)));
+            model.addAttribute("maxPages", (int) Math.ceil(nrOfPages == 0 ? nrOfPages + 1 : nrOfPages));
 
             model.addAttribute("jobs", myJobs);
             model.addAttribute("pageNo", Integer.valueOf(page.intValue() + 1));

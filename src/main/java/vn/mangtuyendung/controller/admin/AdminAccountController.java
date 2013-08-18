@@ -31,7 +31,7 @@ public class AdminAccountController extends SiteAbstractController {
             long total = this.accountService.count();
             float nrOfPages = (float) total / sizeNo;
             model.addAttribute("totalaccount", Long.valueOf(total));
-            model.addAttribute("maxPages", Integer.valueOf((int) ((nrOfPages > (int) nrOfPages) || (nrOfPages == 0.0D) ? nrOfPages + 1.0F : nrOfPages)));
+            model.addAttribute("maxPages", (int) Math.ceil(nrOfPages == 0 ? nrOfPages + 1 : nrOfPages));
 
             return "admin/members";
         } catch (Exception ex) {
@@ -51,7 +51,7 @@ public class AdminAccountController extends SiteAbstractController {
             accounts = this.accountService.findByLimit("CREATED DESC", page.intValue() * sizeNo, sizeNo);
             long total = this.accountService.count();
             float nrOfPages = (float) total / sizeNo;
-            model.addAttribute("maxPages", Integer.valueOf((int) ((nrOfPages > (int) nrOfPages) || (nrOfPages == 0.0D) ? nrOfPages + 1.0F : nrOfPages)));
+            model.addAttribute("maxPages", (int) Math.ceil(nrOfPages == 0 ? nrOfPages + 1 : nrOfPages));
 
             model.addAttribute("totalaccount", Long.valueOf(total));
             model.addAttribute("topaccounts", accounts);

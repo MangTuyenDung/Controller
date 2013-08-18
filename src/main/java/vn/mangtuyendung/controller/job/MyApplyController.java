@@ -122,7 +122,7 @@ public class MyApplyController extends SiteAbstractController {
             }
             long total = applyService.countByUsername(getUsername());
             float nrOfPages = (float) total / sizeNo;
-            model.addAttribute("maxPages", nrOfPages == 0 ? nrOfPages + 1 : nrOfPages);
+            model.addAttribute("maxPages", (int) Math.ceil(nrOfPages == 0 ? nrOfPages + 1 : nrOfPages));
 
             model.addAttribute("myApplies", myApplies);
             model.addAttribute("pageNo", Integer.valueOf(page.intValue() + 1));

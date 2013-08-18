@@ -57,7 +57,7 @@ public class AdminApplyController extends SiteAbstractController {
             model.addAttribute("applies", myApplies);
             long total = applyService.count();
             float nrOfPages = (float) total / sizeNo;
-            model.addAttribute("maxPages", nrOfPages == 0 ? nrOfPages + 1 : nrOfPages);
+            model.addAttribute("maxPages", (int) Math.ceil(nrOfPages == 0 ? nrOfPages + 1 : nrOfPages));
 
             return "admin/applies";
         } catch (Exception ex) {
@@ -100,7 +100,7 @@ public class AdminApplyController extends SiteAbstractController {
             }
             long total = applyService.count();
             float nrOfPages = (float) total / sizeNo;
-            model.addAttribute("maxPages", nrOfPages == 0 ? nrOfPages + 1 : nrOfPages);
+            model.addAttribute("maxPages", (int) Math.ceil(nrOfPages == 0 ? nrOfPages + 1 : nrOfPages));
 
             model.addAttribute("applies", myApplies);
             model.addAttribute("pageNo", Integer.valueOf(page.intValue() + 1));

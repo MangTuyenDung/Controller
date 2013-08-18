@@ -286,7 +286,8 @@ public class CrawlController {
         }
         uiModel.addAttribute("requests", items);
         float nrOfPages = (float) this.service.count(domain) / sizeNo;
-        uiModel.addAttribute("maxPages", Integer.valueOf((int) ((nrOfPages > (int) nrOfPages) || (nrOfPages == 0.0D) ? nrOfPages + 1.0F : nrOfPages)));
+        uiModel.addAttribute("maxPages", (int) Math.ceil(nrOfPages == 0 ? nrOfPages + 1 : nrOfPages));
+        
         return "crawl/list";
     }
 }

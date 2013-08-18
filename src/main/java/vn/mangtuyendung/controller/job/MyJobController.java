@@ -97,7 +97,7 @@ public class MyJobController extends SiteAbstractController {
             sizeNo = size == null ? 10 : size.intValue();
             page = Integer.valueOf(page == null ? 0 : page.intValue() - 1);
             int start = page.intValue() * sizeNo;
-            jobs = crawlService.findByUsername(DEFAULT_DOMAIN, getUsername(), start, start + sizeNo);
+            jobs = crawlService.findByUsername(DEFAULT_DOMAIN, getUsername(), start, sizeNo);
             List<AdminJobForm> myJobs = new ArrayList<AdminJobForm>();
             for (CrawlDomain crawlDomain : jobs) {
                 AdminJobForm adminJobForm = new AdminJobForm();
@@ -111,7 +111,7 @@ public class MyJobController extends SiteAbstractController {
             }
             long total = crawlService.countByUsername(DEFAULT_DOMAIN, getUsername());
             float nrOfPages = (float) total / sizeNo;
-            model.addAttribute("maxPages", nrOfPages == 0 ? nrOfPages + 1 : nrOfPages);
+            model.addAttribute("maxPages", (int) Math.ceil(nrOfPages == 0 ? nrOfPages + 1 : nrOfPages));
 
             model.addAttribute("jobs", myJobs);
             model.addAttribute("pageNo", Integer.valueOf(page.intValue() + 1));

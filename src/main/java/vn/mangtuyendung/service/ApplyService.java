@@ -65,11 +65,11 @@ public class ApplyService {
      * @param username User ID
      * @return The jobs you have applied.
      */
-    public List<ApplyDomain> findByUsername(String username, int start, int end) {
+    public List<ApplyDomain> findByUsername(String username, int start, int limit) {
         try {
             Assert.isTrue(!StringUtils.isBlank(username), "The job you have applied then username must not blank");
             logger.debug("Find the jobs you have applied by username " + username);
-            List<ApplyDomain> domains = repository.findByUsername(username, start, end);
+            List<ApplyDomain> domains = repository.findByUsername(username, start, limit);
             if (domains == null || domains.isEmpty()) {
                 logger.debug("Cant find any job you have applied by username " + username);
                 return new ArrayList<ApplyDomain>();
@@ -87,20 +87,19 @@ public class ApplyService {
      * Find limited the jobs you have applied
      *
      * @param start Start row
-     * @param end End row
+     * @param limit Limit row
      * @return The jobs you have applied
      */
-    public List<ApplyDomain> findBy(int start, int end) {
+    public List<ApplyDomain> findBy(int start, int limit) {
         try {
             Assert.isTrue(!(start < 0), "Start must great or equal 0");
-            Assert.isTrue(!(end < 0), "End must great than 0");
-            Assert.isTrue(!(end < start), "End must great than start");
+            Assert.isTrue(!(limit < 0), "Limit must great than 0");
             if (logger.isDebugEnabled()) {
-                logger.debug("Find all the jobs you have applied by limit " + start + " to " + end);
+                logger.debug("Find all the jobs you have applied by limit " + start + " to " + (start + limit));
             }
-            return repository.findBy(start, end);
+            return repository.findBy(start, limit);
         } catch (Exception ex) {
-            logger.error("Error find the jobs you have applied by limit " + start + " to " + end, ex);
+            logger.error("Error find the jobs you have applied by limit " + start + " to " + (start + limit), ex);
         }
         return new ArrayList();
     }

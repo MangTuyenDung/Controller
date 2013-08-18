@@ -46,11 +46,11 @@ public class CrawlService {
         this.repository = repository;
     }
 
-    public List<CrawlDomain> findBy(String domain, int start, int end) {
+    public List<CrawlDomain> findBy(String domain, int start, int limit) {
         List<CrawlDomain> account = null;
         try {
-            logger.debug("Find list jobs from " + start + " to " + end + " in database.");
-            account = repository.findBy(domain, start, end);
+            logger.debug("Find list jobs from " + start + " to " + (start + limit) + " in database.");
+            account = repository.findBy(domain, start, limit);
         } catch (Exception ex) {
             logger.error("Find list items crawl error.", ex);
         }
@@ -61,11 +61,11 @@ public class CrawlService {
         return new ArrayList<CrawlDomain>();
     }
 
-    public List<CrawlDomain> findByUsername(String domain, String username, int start, int end) {
+    public List<CrawlDomain> findByUsername(String domain, String username, int start, int limit) {
         List<CrawlDomain> account = null;
         try {
-            logger.debug("Find list jobs by username " + username + " from " + start + " to " + end + " in database.");
-            account = repository.findByUsername(domain, username, start, end);
+            logger.debug("Find list jobs by username " + username + " from " + start + " to " + (start + limit) + " in database.");
+            account = repository.findByUsername(domain, username, start, limit);
         } catch (Exception ex) {
             logger.error("Find list items jobs by username " + username + " error.", ex);
         }
