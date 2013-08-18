@@ -64,7 +64,6 @@ import vn.mangtuyendung.service.JobSearchService;
  *  01-Jan-2013     tuanta      Create first time
  *  25-jan-2013     tuanta      Refactor code
  */
-
 @RequestMapping({"/"})
 @Controller
 public class HomeController extends SiteAbstractController {
@@ -361,46 +360,50 @@ public class HomeController extends SiteAbstractController {
             SolrDocumentList list = response.getResults();
             if ((list != null) && (!list.isEmpty())) {
                 JobDomain job = solrService.convertDocument((SolrDocument) list.get(0));
-                model.addAttribute("job", job);
-                if (job.getExpired().after(new Date())) { //If job not expired
-                    model.addAttribute("title", "Cần tuyển " + job.getTitle() + " tại " + (String) job.getJobLocation().get(0));
-                    model.addAttribute("description", job.getContent());
-                    return "job/view";
-                } else {
-                    String query = "(title:(\"" + job.getTitle() + "\")^2 OR title:(" + job.getTitle() + ")^1.5)";
-                    query = query + " AND expired:[NOW TO *]";
-                    query = query + " AND jobUpdated:[NOW-30DAY TO *]";
-                    int sizeNo = 10;
-                    response = solrService.search(query, 0, sizeNo);
-                    setLocation(response, model);
-                    setCategory(response, model);
-                    model.addAttribute("domains", response.getFacetField("domain").getValues());
-                    Map highlights = response.getHighlighting();
-                    List<JobDomain> jobs = solrService.convertDocument(response.getResults());
-                    for (JobDomain jobDomain : jobs) {
-                        try {
-                            jobDomain.setHigthligthTitle((String) ((List) ((Map) highlights.get(jobDomain.getSignature())).get("title")).get(0));
-                        } catch (Exception ex) {
+                if (job != null) {
+                    if (job.getExpired().after(new Date())) { //If job not expired
+                        model.addAttribute("job", job);
+                        model.addAttribute("title", "Cần tuyển " + job.getTitle() + " tại " + (String) job.getJobLocation().get(0));
+                        model.addAttribute("description", job.getContent());
+                        return "job/view";
+                    } else {
+                        String query = "(title:(\"" + job.getTitle() + "\")^2 OR title:(" + job.getTitle() + ")^1.5)";
+                        query = query + " AND expired:[NOW TO *]";
+                        query = query + " AND jobUpdated:[NOW-30DAY TO *]";
+                        int sizeNo = 10;
+                        response = solrService.search(query, 0, sizeNo);
+                        setLocation(response, model);
+                        setCategory(response, model);
+                        model.addAttribute("domains", response.getFacetField("domain").getValues());
+                        Map highlights = response.getHighlighting();
+                        List<JobDomain> jobs = solrService.convertDocument(response.getResults());
+                        for (JobDomain jobDomain : jobs) {
+                            try {
+                                jobDomain.setHigthligthTitle((String) ((List) ((Map) highlights.get(jobDomain.getSignature())).get("title")).get(0));
+                            } catch (Exception ex) {
+                            }
                         }
+                        long total = response.getResults().getNumFound();
+                        float nrOfPages = (float) total / sizeNo;
+
+                        SearchForm form = new SearchForm();
+                        form.setSlocation("all");
+                        form.setStext(job.getTitle());
+
+                        model.addAttribute("maxPages", (int) Math.ceil(nrOfPages == 0 ? nrOfPages + 1 : nrOfPages));
+                        model.addAttribute("pageNo", Integer.valueOf(1));
+                        model.addAttribute("sizeNo", Integer.valueOf(sizeNo));
+                        model.addAttribute("jobs", jobs);
+                        model.addAttribute("text", job.getTitle());
+                        model.addAttribute("location", "all");
+                        model.addAttribute("sform", form);
+                        String title = "Cần tuyển " + form.getStext();
+                        model.addAttribute("title", title);
+                        model.addAttribute("description", "Cơ hội việc làm " + form.getStext() + " trên Mạng tuyển dụng.");
+                        return "search/view";
                     }
-                    long total = response.getResults().getNumFound();
-                    float nrOfPages = (float) total / sizeNo;
-
-                    SearchForm form = new SearchForm();
-                    form.setSlocation("all");
-                    form.setStext(job.getTitle());
-
-                    model.addAttribute("maxPages", (int) Math.ceil(nrOfPages == 0 ? nrOfPages + 1 : nrOfPages));
-                    model.addAttribute("pageNo", Integer.valueOf(1));
-                    model.addAttribute("sizeNo", Integer.valueOf(sizeNo));
-                    model.addAttribute("jobs", jobs);
-                    model.addAttribute("text", job.getTitle());
-                    model.addAttribute("location", "all");
-                    model.addAttribute("sform", form);
-                    String title = "Cần tuyển " + form.getStext();
-                    model.addAttribute("title", title);
-                    model.addAttribute("description", "Cơ hội việc làm " + form.getStext() + " trên Mạng tuyển dụng.");
-                    return "search/view";
+                } else {
+                    return "redirect:/";
                 }
             }
         } catch (SolrServerException ex) {
