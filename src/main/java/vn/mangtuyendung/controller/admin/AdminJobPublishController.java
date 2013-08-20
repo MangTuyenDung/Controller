@@ -68,11 +68,11 @@ public class AdminJobPublishController extends SiteAbstractController {
             domain.setId(form.getId());
             domain.setPublished(t);
             domain.setUpdated(t);
-            domain.setExpired(new Timestamp(time + 15 * 24 * 3600));
+            domain.setExpired(new Timestamp(time + 15 * 24 * 3600 * 1000));
             domain.setUpdater(getUsername());
             service.publish(domain);
             domain = service.findById(form.getId());
-            domain.setJobExpired(MyCommon.formatDate("dd-MM-yyyy", domain.getExpired()));
+            domain.setJobExpired(MyCommon.formatDate("dd-MM-yyyy", new Timestamp(time + 15 * 24 * 3600 * 1000)));
             JobDomain jobClone = clone(domain);
             JobDocument doc = new JobDocument();
             doc.convertCrawlDomain(jobClone);
@@ -97,7 +97,7 @@ public class AdminJobPublishController extends SiteAbstractController {
     private JobDomain clone(CrawlDomain source) {
         JobDomain clone = new JobDomain();
         clone.setId(Long.valueOf(source.getId()));
-        clone.setBoost(Float.valueOf(source.getBoost()));
+        clone.setBoost(Float.valueOf(source.getBoost()) * 2);
         clone.setDomain(source.getDomain());
         clone.setUrl(source.getUrl());
         clone.setExpired(source.getExpired());
